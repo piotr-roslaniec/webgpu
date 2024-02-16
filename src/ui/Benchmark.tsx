@@ -19,7 +19,7 @@ interface BenchmarkProps {
   msmFunc: (
     baseAffinePoints: BigIntPoint[] | U32ArrayPoint[],
     scalars: bigint[] | Uint32Array[]
-  ) => Promise<{ x: bigint, y: bigint }>
+  ) => Promise<{ result: { x: bigint, y: bigint }, executionTime: number }>
   postResult: (result: { x: bigint, y: bigint }, timeMS: number, msmFunc: string) => void;
   // buildFunc: Promise<any>;
 }
@@ -36,22 +36,21 @@ export const Benchmark: React.FC<BenchmarkProps> = (
     // const result = await (baseAffinePoints, scalars);
     let result;
     if (msmFunc.name == "penumbra_wasm") {
-      const result = await penumbra_wasm();
-      setRunTime(result);
-      setResult(result);
+      const executionTime = await penumbra_wasm();
+      setRunTime(executionTime);
     }
     if (msmFunc.name == "penumbra_wasm_parallel") {
-      const result = await penumbra_wasm_parallel();
-      setRunTime(result);
-      setResult(result);
+      const executionTime = await penumbra_wasm_parallel();
+      setRunTime(executionTime);
     }
     if (msmFunc.name == "webgpu_compute_msm") {
-      const result = await webgpu_compute_msm(baseAffinePoints, scalars);
+      const { result, executionTime } = await webgpu_compute_msm(baseAffinePoints, scalars);
+      setRunTime(executionTime);
       setResult(result);
     }
-
     if (msmFunc.name == "webgpu_pippenger_msm") {
-      const result = await webgpu_pippenger_msm(baseAffinePoints, scalars);
+      const { result, executionTime } = await webgpu_pippenger_msm(baseAffinePoints, scalars);
+      setRunTime(executionTime);
       setResult(result);
     }
     return result;

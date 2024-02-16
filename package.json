@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "webpack serve --config webpack.dev.config.cjs",
+    "build": "webpack --config webpack.prod.config.cjs",
     "lint": "eslint --ext .js,.ts .",
     "test": "node --experimental-vm-modules $(yarn bin jest)",
     "runningProcesses": "sudo lsof -i :4040",
