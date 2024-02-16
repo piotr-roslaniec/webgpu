@@ -108,7 +108,7 @@ export const AllBenchmarks: React.FC = () => {
         <TestCaseDropDown useRandomInputs={useRandomInputs} loadAndSetData={loadAndSetData}/>
       </div> */}
       
-      {/* <Benchmark
+      <Benchmark
         name={'Pippenger WebGPU MSM'}
         disabled={disabledBenchmark}
         baseAffinePoints={baseAffineBigIntPoints}
@@ -116,8 +116,8 @@ export const AllBenchmarks: React.FC = () => {
         expectedResult={expectedResult}
         msmFunc={webgpu_pippenger_msm}
         postResult={postResult}
-      /> */}
-      {/* <Benchmark
+      />
+      <Benchmark
         name={'Naive WebGPU MSM'}
         disabled={disabledBenchmark}
         // baseAffinePoints={u32Points}
@@ -127,7 +127,7 @@ export const AllBenchmarks: React.FC = () => {
         expectedResult={expectedResult}
         msmFunc={webgpu_compute_msm}
         postResult={postResult}
-      /> */}
+      />
       <Benchmark
         name={'Penumbra Wasm: Single Thread'}
         disabled={disabledBenchmark}
