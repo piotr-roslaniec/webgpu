@@ -6,7 +6,8 @@ import { transaction_plan } from "./tx-plan";
 import { webWorkers } from "./workers/worker";
 import { witness, build_parallel } from '@penumbra-zone-test/wasm-bundler';
 
-export const penumbra_wasm_parallel = async (): Promise<any> => {    
+export const penumbra_wasm_parallel = async (): Promise<any> => {
+    console.log("Starting penumbra_wasm_parallel");
     // Initialize database
     const indexedDb = await IndexedDb.initialize({
       chainId: 'penumbra-testnet-iapetus',

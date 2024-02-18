@@ -93,7 +93,7 @@ export const AllBenchmarks: React.FC = () => {
     generateNewInputs();
     setComparisonResults([]);
   }, [inputSize]);
-  
+
   return (
     <div>
       {/* <div className="flex items-center space-x-4 px-5">
@@ -107,14 +107,14 @@ export const AllBenchmarks: React.FC = () => {
         />
         <TestCaseDropDown useRandomInputs={useRandomInputs} loadAndSetData={loadAndSetData}/>
       </div> */}
-      
+
       <Benchmark
         name={'Pippenger WebGPU MSM'}
         disabled={disabledBenchmark}
         baseAffinePoints={baseAffineBigIntPoints}
         scalars={bigIntScalars}
         expectedResult={expectedResult}
-        msmFunc={webgpu_pippenger_msm}
+        msmFunc={'webgpu_pippenger_msm'}
         postResult={postResult}
       />
       <Benchmark
@@ -125,7 +125,7 @@ export const AllBenchmarks: React.FC = () => {
         baseAffinePoints={baseAffineBigIntPoints}
         scalars={bigIntScalars}
         expectedResult={expectedResult}
-        msmFunc={webgpu_compute_msm}
+        msmFunc={'webgpu_compute_msm'}
         postResult={postResult}
       />
       <Benchmark
@@ -134,7 +134,7 @@ export const AllBenchmarks: React.FC = () => {
         baseAffinePoints={baseAffineBigIntPoints}
         scalars={bigIntScalars}
         expectedResult={expectedResult}
-        msmFunc={penumbra_wasm}
+        msmFunc={'penumbra_wasm'}
         postResult={postResult}
       />
       <Benchmark
@@ -143,7 +143,7 @@ export const AllBenchmarks: React.FC = () => {
         baseAffinePoints={baseAffineBigIntPoints}
         scalars={bigIntScalars}
         expectedResult={expectedResult}
-        msmFunc={penumbra_wasm_parallel}
+        msmFunc={'penumbra_wasm_parallel'}
         postResult={postResult}
       />
     </div>

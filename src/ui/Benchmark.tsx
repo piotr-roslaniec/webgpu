@@ -16,10 +16,7 @@ interface BenchmarkProps {
   baseAffinePoints: BigIntPoint[] | U32ArrayPoint[];
   scalars: bigint[] | Uint32Array[];
   expectedResult: { x: bigint, y: bigint } | null;
-  msmFunc: (
-    baseAffinePoints: BigIntPoint[] | U32ArrayPoint[],
-    scalars: bigint[] | Uint32Array[]
-  ) => Promise<{ result: { x: bigint, y: bigint }, executionTime: number }>
+  msmFunc: string
   postResult: (result: { x: bigint, y: bigint }, timeMS: number, msmFunc: string) => void;
   // buildFunc: Promise<any>;
 }
@@ -27,6 +24,7 @@ interface BenchmarkProps {
 export const Benchmark: React.FC<BenchmarkProps> = (
   { bold, disabled, name, baseAffinePoints, scalars, expectedResult, msmFunc, postResult }
 ) => {
+  console.log('Benchmark')
   const [runTime, setRunTime] = useState(0);
   const [running, setRunning] = useState(false);
   const [result, setResult] = useState<{ x: bigint, y: bigint }>({ x: BigInt(0), y: BigInt(0) });
@@ -34,26 +32,24 @@ export const Benchmark: React.FC<BenchmarkProps> = (
   const runFunc = async () => {
     setRunning(true);
     // const result = await (baseAffinePoints, scalars);
-    let result;
-    if (msmFunc.name == "penumbra_wasm") {
+    if (msmFunc === "penumbra_wasm") {
       const executionTime = await penumbra_wasm();
       setRunTime(executionTime);
     }
-    if (msmFunc.name == "penumbra_wasm_parallel") {
+    else if (msmFunc === "penumbra_wasm_parallel") {
       const executionTime = await penumbra_wasm_parallel();
       setRunTime(executionTime);
     }
-    if (msmFunc.name == "webgpu_compute_msm") {
+    else if (msmFunc === "webgpu_compute_msm") {
       const { result, executionTime } = await webgpu_compute_msm(baseAffinePoints, scalars);
       setRunTime(executionTime);
       setResult(result);
     }
-    if (msmFunc.name == "webgpu_pippenger_msm") {
+    else if (msmFunc === "webgpu_pippenger_msm") {
       const { result, executionTime } = await webgpu_pippenger_msm(baseAffinePoints, scalars);
       setRunTime(executionTime);
       setResult(result);
     }
-    return result;
   };
 
   const correctnessMark = (result: { x: bigint, y: bigint } | null, expectedResult: { x: bigint, y: bigint } | null) => {

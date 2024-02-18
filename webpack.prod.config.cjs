@@ -1,15 +1,18 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
 const webpack = require("webpack");
-const webpackServer = require('webpack-dev-server');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
-const cleanWebpackPlugin = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const config = {
   mode: "production",
   entry: "./src/index.tsx",
+  devServer: {
+    hot:false,
+  },
   experiments: {
     asyncWebAssembly: true
   },
@@ -34,6 +37,11 @@ const config = {
           },
         },
       },
+      {
+        test: /\.css$/i,
+        exclude: /node_modules/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+      }
     ],
   },
   resolve: {
@@ -48,15 +56,19 @@ const config = {
     new HtmlWebpackPlugin({
       template: "public/index.html",
     }),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+    }),
     new ForkTsCheckerWebpackPlugin({
       async: false,
     }),
     new ESLintPlugin({
       extensions: ["js", "jsx", "ts", "tsx"],
     }),
-    new cleanWebpackPlugin.CleanWebpackPlugin(),
+    // new CleanWebpackPlugin()
   ],
 };
+
 
 const workerConfig = {
   mode: "production",

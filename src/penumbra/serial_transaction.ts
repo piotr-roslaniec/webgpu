@@ -8,7 +8,9 @@ import { transaction_plan } from "./tx-plan";
 import { fetchBinaryFile } from "./utils"
 import { load_proving_key } from '@penumbra-zone-test/wasm-bundler';
 
-export const penumbra_wasm = async (): Promise<any> => {    
+export const penumbra_wasm = async (): Promise<any> => {
+    console.log("Starting penumbra_wasm");
+
     // Initialize database
     const indexedDb = await IndexedDb.initialize({
       chainId: 'penumbra-testnet-iapetus',
@@ -61,9 +63,9 @@ export const penumbra_wasm = async (): Promise<any> => {
     // Witness and Build
     const build = await witness_and_build(indexedDb, auth, transactionPlan)
     console.log("TX is: ", build)
-    
+
     const endTime = performance.now();
-    const executionTime = endTime - startTime; 
+    const executionTime = endTime - startTime;
     console.log(`Serial transaction execution time: ${executionTime} milliseconds`);
 
     return executionTime
